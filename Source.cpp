@@ -3,31 +3,35 @@
 #include <string>
 #include <vector>
 
-using namespace std;
 
-class FileManager {
+
+class FileManager 
+{
+
 private:
-    string productFile = "products.txt";
-    string quantityFile = "quantity.txt";
-    string priceFile = "price.txt";
+    std::string productFile = "products.txt";
+    std::string quantityFile = "quantity.txt";
+    std::string priceFile = "price.txt";
+
 
 public:
-    // Проверка существования файла
-    bool CheckIfFileExists(const string& filename) {
-        ifstream file(filename);
+
+    // РџСЂРѕРІРµСЂРєР° СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёСЏ
+    bool CheckIfFileExists(const  std::string& filename) {
+        std::ifstream file(filename);
         bool exists = file.good();
         file.close();
         return exists;
     }
 
-    // Подсчет количества строк в файле
-    int CountLinesInFile(const string& filename) {
-        ifstream file(filename);
-        string line;
+    // РєРѕР»РёС‡РµСЃС‚РІo СЃС‚СЂРѕРє
+    int CountLinesInFile(const std::string& filename) {
+        std::ifstream file(filename);
+        std::string line;
         int count = 0;
 
         if (file.is_open()) {
-            while (getline(file, line)) {
+            while (std::getline(file, line)) {
                 count = count + 1;
             }
             file.close();
@@ -36,31 +40,31 @@ public:
         return count;
     }
 
-    // Запись одной строки в файл
-    void WriteLineToFile(const string& filename, const string& data, bool addToEnd) {
-        ofstream file;
+    // Р—Р°РїРёСЃСЊ РѕРґРЅРѕР№ СЃС‚СЂРѕРєРё 
+    void WriteLineToFile(const std::string& filename, const std::string& data, bool addToEnd) {
+        std::ofstream file;
 
         if (addToEnd) {
-            file.open(filename, ios::app);
+            file.open(filename, std::ios::app);
         }
         else {
             file.open(filename);
         }
 
         if (file.is_open()) {
-            file << data << endl;
+            file << data << "\n";
             file.close();
         }
         else {
-            cout << "Ошибка: не удалось открыть файл " << filename << endl;
+            std::cout << "РћС€РёР±РєР°: РЅРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» " << filename << "\n";
         }
     }
 
-    // Чтение всех строк из файла
-    vector<string> ReadLinesFromFile(const string& filename) {
-        vector<string> lines;
-        ifstream file(filename);
-        string line;
+    // Р§С‚РµРЅРёРµ РІСЃРµС… СЃС‚СЂРѕРє 
+    std::vector<std::string> ReadLinesFromFile(const std::string& filename) {
+        std::vector<std::string> lines;
+        std::ifstream file(filename);
+        std::string line;
 
         if (file.is_open()) {
             while (getline(file, line)) {
@@ -72,30 +76,30 @@ public:
         return lines;
     }
 
-    // Очистка файла
-    void ClearFileContents(const string& filename) {
-        ofstream file(filename);
+   
+    void ClearFileContents(const std::string& filename) {
+        std::ofstream file(filename);
         file.close();
     }
 
-    // Заполнение конкретного файла
-    void FillSpecificFile(const string& filename, const string& description) {
-        cout << "\n=== " << description << " ===" << endl;
+   
+    void FillSpecificFile(const std::string& filename, const std::string& description) {
+        std::cout << "\n=== " << description << " ===\n";
 
         bool fileExists = CheckIfFileExists(filename);
         bool shouldAppend = true;
 
         if (fileExists) {
-            cout << "Файл " << filename << " уже существует!" << endl;
-            cout << "Выберите действие:" << endl;
-            cout << "1 - Дописать новые данные в конец файла" << endl;
-            cout << "2 - Удалить старые данные и записать новые" << endl;
-            cout << "0 - Вернуться в главное меню" << endl;
+            std::cout << "Р¤Р°Р№Р» " << filename << " СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!\n";
+            std::cout << "Р’С‹Р±РµСЂРёС‚Рµ РґРµР№СЃС‚РІРёРµ:\n";
+            std::cout << "1 - Р”РѕРїРёСЃР°С‚СЊ РЅРѕРІС‹Рµ РґР°РЅРЅС‹Рµ РІ РєРѕРЅРµС† С„Р°Р№Р»Р°\n";
+            std::cout << "2 - РЈРґР°Р»РёС‚СЊ СЃС‚Р°СЂС‹Рµ РґР°РЅРЅС‹Рµ Рё Р·Р°РїРёСЃР°С‚СЊ РЅРѕРІС‹Рµ\n";
+            std::cout << "0 - Р’РµСЂРЅСѓС‚СЊСЃСЏ РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ\n";
 
             int userChoice;
-            cout << "Ваш выбор: ";
-            cin >> userChoice;
-            cin.ignore();
+            std::cout << "Р’Р°С€ РІС‹Р±РѕСЂ: ";
+            std::cin >> userChoice;
+            std::cin.ignore();
 
             if (userChoice == 0) {
                 return;
@@ -106,35 +110,35 @@ public:
             }
         }
 
-        cout << "\nВведите 3 значения для файла " << filename << ":" << endl;
+        std::cout << "\nР’РІРµРґРёС‚Рµ 3 Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ С„Р°Р№Р»Р° " << filename << ":\n";
 
         int i = 1;
         while (i <= 3) {
-            string value;
-            cout << i << ") ";
-            getline(cin, value);
+            std::string value;
+            std::cout << i << ") ";
+            std::getline(std::cin, value);
             WriteLineToFile(filename, value, true);
             i = i + 1;
         }
 
-        cout << "Данные успешно записаны в файл!" << endl;
+        std::cout << "Р”Р°РЅРЅС‹Рµ СѓСЃРїРµС€РЅРѕ Р·Р°РїРёСЃР°РЅС‹ РІ С„Р°Р№Р»!\n";
     }
 
-    // Отобразить таблицу с товарами
+   
     void DisplayProductsTable() {
-        cout << "\n=== ТАБЛИЦА ТОВАРОВ ===" << endl;
+        std::cout << "\n=== РўРђР‘Р›РР¦Рђ РўРћР’РђР РћР’ ===\n";
 
-        vector<string> products = ReadLinesFromFile(productFile);
-        vector<string> quantities = ReadLinesFromFile(quantityFile);
-        vector<string> prices = ReadLinesFromFile(priceFile);
+        std::vector<std::string> products = ReadLinesFromFile(productFile);
+        std::vector<std::string> quantities = ReadLinesFromFile(quantityFile);
+        std::vector<std::string> prices = ReadLinesFromFile(priceFile);
 
-        // Проверяем, есть ли данные в файлах
+        // РїСЂРѕРІРµСЂСЏРµРј, РµСЃС‚СЊ Р»Рё РґР°РЅРЅС‹Рµ РІ С„Р°Р№Р»Р°С…
         if (products.size() == 0 || quantities.size() == 0 || prices.size() == 0) {
-            cout << "Ошибка: один или несколько файлов пусты!" << endl;
+            std::cout << "РћС€РёР±РєР°: РѕРґРёРЅ РёР»Рё РЅРµСЃРєРѕР»СЊРєРѕ С„Р°Р№Р»РѕРІ РїСѓСЃС‚С‹!0\n";
             return;
         }
 
-        // Находим минимальное количество записей
+        // РјРёРЅРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РїРёСЃРµР№
         int minRecords = products.size();
         if (quantities.size() < minRecords) {
             minRecords = quantities.size();
@@ -144,79 +148,80 @@ public:
         }
 
         if (minRecords == 0) {
-            cout << "Нет данных для отображения!" << endl;
+            std::cout << "РќРµС‚ РґР°РЅРЅС‹С… РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ!\n";
             return;
         }
 
-        // Выводим заголовок таблицы
-        cout << "Id  Название           Кол-во     Цена" << endl;
-        cout << "----------------------------------------" << endl;
+       
+        std::cout << "Id  РќР°Р·РІР°РЅРёРµ           РљРѕР»-РІРѕ     Р¦РµРЅР°\n";
+        std::cout << "----------------------------------------\n";
 
-        // Выводим данные
+      
         int i = 0;
         while (i < minRecords) {
-            cout << i + 1 << "   " << products[i] << "   " << quantities[i] << "   " << prices[i] << endl;
+            std::cout << i + 1 << "   " << products[i] << "   " << quantities[i] << "   " << prices[i] << "\n";
             i = i + 1;
         }
     }
 
-    // Показать статус всех файлов
+   
     void ShowAllFilesStatus() {
-        cout << "\n=== СТАТУС ФАЙЛОВ ===" << endl;
+        std::cout << "\n=== РЎРўРђРўРЈРЎ Р¤РђР™Р›РћР’ ===\n";
 
-        // Статус файла названий товаров
+        // РЅР°Р·РІР°РЅРёР№ С‚РѕРІР°СЂРѕРІ
         if (CheckIfFileExists(productFile)) {
             int count = CountLinesInFile(productFile);
-            cout << "Названия товаров: существует, записей: " << count << endl;
+            std::cout << "РќР°Р·РІР°РЅРёСЏ С‚РѕРІР°СЂРѕРІ: СЃСѓС‰РµСЃС‚РІСѓРµС‚, Р·Р°РїРёСЃРµР№: " << count << "\n";
         }
         else {
-            cout << "Названия товаров: не существует" << endl;
+            std::cout << "РќР°Р·РІР°РЅРёСЏ С‚РѕРІР°СЂРѕРІ: РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\n";
         }
 
-        // Статус файла количеств
+        // РєРѕР»РёС‡РµСЃС‚РІРѕ
         if (CheckIfFileExists(quantityFile)) {
             int count = CountLinesInFile(quantityFile);
-            cout << "Количества: существует, записей: " << count << endl;
+            std::cout << "РљРѕР»РёС‡РµСЃС‚РІР°: СЃСѓС‰РµСЃС‚РІСѓРµС‚, Р·Р°РїРёСЃРµР№: " << count << "\n";
         }
         else {
-            cout << "Количества: не существует" << endl;
+            std::cout << "РљРѕР»РёС‡РµСЃС‚РІР°: РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\n";
         }
 
-        // Статус файла цен
+        // С†РµРЅС‹
         if (CheckIfFileExists(priceFile)) {
             int count = CountLinesInFile(priceFile);
-            cout << "Цены: существует, записей: " << count << endl;
+            std::cout << "Р¦РµРЅС‹: СЃСѓС‰РµСЃС‚РІСѓРµС‚, Р·Р°РїРёСЃРµР№: " << count << "\n";
         }
         else {
-            cout << "Цены: не существует" << endl;
+            std::cout << "Р¦РµРЅС‹: РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\n";
         }
     }
 
-    // Запуск приложения
+    
+
     void Run() {
         int userChoice;
 
         while (true) {
-            cout << "\n=== СИСТЕМА УПРАВЛЕНИЯ ТОВАРАМИ ===" << endl;
-            cout << "1 - Заполнить файл названий товаров" << endl;
-            cout << "2 - Заполнить файл количеств" << endl;
-            cout << "3 - Заполнить файл цен" << endl;
-            cout << "4 - Просмотреть таблицу товаров" << endl;
-            cout << "5 - Проверить статус файлов" << endl;
-            cout << "0 - Выход" << endl;
+            std::cout << "\n=== РЎРРЎРўР•РњРђ РЈРџР РђР’Р›Р•РќРРЇ РўРћР’РђР РђРњР ===\n";
+            std::cout << "1 - Р—Р°РїРѕР»РЅРёС‚СЊ С„Р°Р№Р» РЅР°Р·РІР°РЅРёР№ С‚РѕРІР°СЂРѕРІ\n";
+            std::cout << "2 - Р—Р°РїРѕР»РЅРёС‚СЊ С„Р°Р№Р» РєРѕР»РёС‡РµСЃС‚РІ\n";
+            std::cout << "3 - Р—Р°РїРѕР»РЅРёС‚СЊ С„Р°Р№Р» С†РµРЅ\n";
+            std::cout << "4 - РџСЂРѕСЃРјРѕС‚СЂРµС‚СЊ С‚Р°Р±Р»РёС†Сѓ С‚РѕРІР°СЂРѕРІ\n";
+            std::cout << "5 - РџСЂРѕРІРµСЂРёС‚СЊ СЃС‚Р°С‚СѓСЃ С„Р°Р№Р»РѕРІ\n";
+            std::cout << "0 - Р’С‹С…РѕРґ\n";
 
-            cout << "Выберите действие: ";
-            cin >> userChoice;
-            cin.ignore();
+            std::cout << "Р’С‹Р±РµСЂРёС‚Рµ РґРµР№СЃС‚РІРёРµ: ";
+            std::cin >> userChoice;
+            std::cin.ignore();
 
             if (userChoice == 1) {
-                FillSpecificFile(productFile, "ЗАПОЛНЕНИЕ ФАЙЛА НАЗВАНИЙ ТОВАРОВ");
+                FillSpecificFile(productFile, "Р—РђРџРћР›РќР•РќРР• Р¤РђР™Р›Рђ РќРђР—Р’РђРќРР™ РўРћР’РђР РћР’");
             }
             else if (userChoice == 2) {
-                FillSpecificFile(quantityFile, "ЗАПОЛНЕНИЕ ФАЙЛА КОЛИЧЕСТВ");
+                FillSpecificFile(quantityFile, "Р—РђРџРћР›РќР•РќРР• Р¤РђР™Р›Рђ РљРћР›РР§Р•РЎРўР’");
             }
             else if (userChoice == 3) {
-                FillSpecificFile(priceFile, "ЗАПОЛНЕНИЕ ФАЙЛА ЦЕН");
+                FillSpecificFile(priceFile, "Р—РђРџРћР›РќР•РќРР• Р¤РђР™Р›Рђ Р¦Р•Рќ");
             }
             else if (userChoice == 4) {
                 DisplayProductsTable();
@@ -225,11 +230,11 @@ public:
                 ShowAllFilesStatus();
             }
             else if (userChoice == 0) {
-                cout << "Выход из программы..." << endl;
+                std::cout << "Р’С‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹...\n";
                 break;
             }
             else {
-                cout << "Неверный выбор! Попробуйте снова." << endl;
+                std::cout << "РќРµРІРµСЂРЅС‹Р№ РІС‹Р±РѕСЂ! РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°.\n";
             }
         }
     }
